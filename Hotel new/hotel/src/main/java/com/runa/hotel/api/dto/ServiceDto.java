@@ -8,7 +8,7 @@ import com.runa.hotel.enums.Status;
 
 public class ServiceDto {
 
-	private static final Logger logger = LoggerFactory.getLogger(Service.class);
+	private static final Logger logger = LoggerFactory.getLogger(ServiceDto.class);
 
 	private Long id;
 

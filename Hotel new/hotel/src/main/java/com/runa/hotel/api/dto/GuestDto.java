@@ -7,7 +7,7 @@ import com.runa.hotel.entities.Guest;
 
 public class GuestDto {
 
-	private static final Logger logger =LoggerFactory.getLogger(Guest.class);
+	private static final Logger logger =LoggerFactory.getLogger(GuestDto.class);
 	
 	private Long id;
 
