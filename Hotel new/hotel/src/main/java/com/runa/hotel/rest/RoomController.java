@@ -13,7 +13,7 @@ import com.runa.hotel.api.service.IRoomService;
 import com.runa.hotel.entities.Room;
 
 @RestController
-@RequestMapping(value = "/room")
+@RequestMapping(value = "/rooms")
 public class RoomController {
 
 	@Autowired

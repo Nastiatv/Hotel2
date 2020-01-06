@@ -13,7 +13,7 @@ import com.runa.hotel.api.service.IServiceService;
 import com.runa.hotel.entities.Service;
 
 @RestController
-@RequestMapping(value = "/service")
+@RequestMapping(value = "/services")
 public class ServiceController {
 
 	@Autowired
