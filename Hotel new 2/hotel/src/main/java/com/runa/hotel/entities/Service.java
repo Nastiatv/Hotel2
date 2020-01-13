@@ -2,6 +2,8 @@ package com.runa.hotel.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ public class Service extends AEntity {
 	@Column(name = "daily_price")
 	private Integer dailyPrice;
 	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	@Column(name = "name")
 	private String name;
@@ -38,12 +41,12 @@ public class Service extends AEntity {
 		this.name = name;
 	}
 
-	public Status getStatus() {
-		return status;
+	public String getStatus() {
+	    return this.status.name();
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatus(String status) {
+	    this.status = Status.valueOf(status);
 	}
 
 	public Service(Integer dailyPrice, Status status, String name) {

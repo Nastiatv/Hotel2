@@ -27,6 +27,7 @@ public class RoomController {
 	@GetMapping
 	public List<RoomDto> getAllRooms() {
 		return roomService.getAllRooms();
+		
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,10 +42,7 @@ public class RoomController {
 
 	@GetMapping(value = "/{id}")
 	public Room getRoom(@PathVariable Long id) {
-		String test="test";
-		roomService.getRoomById(id);
-			test.charAt(1);
-			return null;
+		return roomService.getRoomById(id);
 	}
 	
 	@DeleteMapping(value = "/{id}")

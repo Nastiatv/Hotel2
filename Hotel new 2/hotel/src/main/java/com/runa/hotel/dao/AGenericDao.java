@@ -3,6 +3,7 @@ package com.runa.hotel.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,11 +21,10 @@ public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> 
 		this.clazz = clazz;
 	}
 
-	public Class<T> getGenericClass(){
+	public Class<T> getGenericClass() {
 		return this.clazz;
 	}
-	
-	
+
 	@PersistenceContext
 	protected EntityManager entityManager;
 
@@ -53,11 +53,15 @@ public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> 
 
 	@Override
 	public List<T> getAll() {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<T> cq = cb.createQuery(getGenericClass());
-		Root<T> rootEntry = cq.from(getGenericClass());
-		cq.select(rootEntry);
-		TypedQuery<T> result = entityManager.createQuery(cq);
-		return result.getResultList();
+		try {
+			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<T> cq = cb.createQuery(getGenericClass());
+			Root<T> rootEntry = cq.from(getGenericClass());
+			cq.select(rootEntry);
+			TypedQuery<T> result = entityManager.createQuery(cq);
+			return result.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 }

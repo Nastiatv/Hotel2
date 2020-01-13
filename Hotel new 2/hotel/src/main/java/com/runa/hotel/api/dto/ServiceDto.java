@@ -39,18 +39,18 @@ public class ServiceDto extends ADto {
 		this.name = name;
 	}
 
-	public Status getStatus() {
-		return status;
+	public String getStatus() {
+	    return this.status.name();
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatus(String status) {
+	    this.status = Status.valueOf(status);
 	}
 
 	public ServiceDto(Service service) {
 		this.id = service.getId();
 		this.dailyPrice = service.getDailyPrice();
-		this.status = service.getStatus();
+		this.status = Status.valueOf(service.getStatus());
 		this.name = service.getName();
 	}
 

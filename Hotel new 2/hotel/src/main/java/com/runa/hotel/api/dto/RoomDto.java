@@ -37,18 +37,18 @@ public class RoomDto extends ADto {
 		this.dailyPrice = dailyPrice;
 	}
 
-	public Status getStatus() {
-		return status;
+	public String getStatus() {
+	    return this.status.name();
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatus(String status) {
+	    this.status = Status.valueOf(status);
 	}
 
 	public RoomDto(Room room) {
 		this.capacity = room.getCapacity();
 		this.dailyPrice = room.getDailyPrice();
-		this.status = room.getStatus();
+		this.status = Status.valueOf(room.getStatus());
 	}
 
 	public RoomDto() {
