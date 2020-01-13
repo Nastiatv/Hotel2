@@ -41,7 +41,10 @@ public class RoomController {
 
 	@GetMapping(value = "/{id}")
 	public Room getRoom(@PathVariable Long id) {
-		return roomService.getRoomById(id);
+		String test="test";
+		roomService.getRoomById(id);
+			test.charAt(1);
+			return null;
 	}
 	
 	@DeleteMapping(value = "/{id}")

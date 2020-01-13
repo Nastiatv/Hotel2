@@ -6,9 +6,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.springframework.stereotype.Repository;
+
 import com.runa.hotel.api.dao.IRoomDao;
 import com.runa.hotel.entities.Room;
 
+@Repository
 public class RoomDao extends AGenericDao<Room> implements IRoomDao{
 
 	

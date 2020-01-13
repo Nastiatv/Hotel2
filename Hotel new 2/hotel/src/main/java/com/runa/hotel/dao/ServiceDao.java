@@ -6,9 +6,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.springframework.stereotype.Repository;
+
 import com.runa.hotel.api.dao.IServiceDao;
 import com.runa.hotel.entities.Service;
 
+@Repository
 public class ServiceDao extends AGenericDao<Service> implements IServiceDao {
 
 	public ServiceDao() {
