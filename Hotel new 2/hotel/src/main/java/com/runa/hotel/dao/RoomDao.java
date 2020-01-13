@@ -1,0 +1,32 @@
+package com.runa.hotel.dao;
+
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import com.runa.hotel.api.dao.IRoomDao;
+import com.runa.hotel.entities.Room;
+
+public class RoomDao extends AGenericDao<Room> implements IRoomDao{
+
+	
+	public RoomDao() {
+		super(Room.class);
+	}
+	
+	@Override
+	public Room getById(Long id) {
+		try {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Room> cq = cb.createQuery(getGenericClass());
+		Root<Room> rootEntry = cq.from(Room.class);
+		CriteriaQuery<Room> all =cq.select(rootEntry).where(cb.equal(rootEntry, id));
+		TypedQuery<Room> result = entityManager.createQuery(all);
+		return result.getSingleResult();}
+		catch(NoResultException e) {
+			return null;
+		}
+	}
+}
