@@ -18,45 +18,39 @@ public class ServiceService implements IServiceService {
 
 	@Autowired
 	private IServiceDao serviceDao;
-	
-	@Override
+
 	public List<ServiceDto> getAllServices() {
 		return ServiceDto.convertList(serviceDao.getAll());
 	}
 
-	@Override
-	public com.runa.hotel.entities.Service addService(ServiceDto dto) {
+	public com.runa.hotel.entities.Service addService(ServiceDto serviceDto) {
 		com.runa.hotel.entities.Service service = new com.runa.hotel.entities.Service();
-		service.setName(dto.getName());
-		service.setDailyPrice(dto.getDailyPrice());
-		service.setStatus(dto.getStatus());
+		service.setName(serviceDto.getName());
+		service.setDailyPrice(serviceDto.getDailyPrice());
+		service.setStatus(serviceDto.getStatus());
 		return serviceDao.create(service);
 	}
 
-	@Override
 	public com.runa.hotel.entities.Service getServiceById(Long id) {
 		return serviceDao.get(id);
 	}
 
-	@Override
-	public void updateService(Long id, ServiceDto dto) {
+	public void updateService(Long id, ServiceDto serviceDto) {
 		com.runa.hotel.entities.Service service = getServiceById(id);
 
-		if (!StringUtils.isEmpty(dto.getStatus())) {
-			service.setStatus(dto.getStatus());
+		if (!StringUtils.isEmpty(serviceDto.getStatus())) {
+			service.setStatus(serviceDto.getStatus());
 		}
 		if (service.getName() != null) {
-			service.setName(dto.getName());
+			service.setName(serviceDto.getName());
 		}
 		if (service.getDailyPrice() != null) {
-			service.setDailyPrice(dto.getDailyPrice());
+			service.setDailyPrice(serviceDto.getDailyPrice());
 		}
 		serviceDao.update(service);
 	}
-	
-	@Override
+
 	public void deleteServiceById(Long id) {
 		serviceDao.delete(getServiceById(id));
 	}
-
-	}
+}
