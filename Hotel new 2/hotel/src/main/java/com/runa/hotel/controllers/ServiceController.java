@@ -46,6 +46,6 @@ public class ServiceController {
 	
 	@DeleteMapping(value = "/{id}")
 	public void deleteService(@PathVariable Long id) {
-		serviceService.getServiceById(id);
+		serviceService.deleteServiceById(id);
 	}
 }

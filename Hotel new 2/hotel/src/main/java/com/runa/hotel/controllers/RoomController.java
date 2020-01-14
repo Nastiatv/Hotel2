@@ -27,7 +27,7 @@ public class RoomController {
 	@GetMapping
 	public List<RoomDto> getAllRooms() {
 		return roomService.getAllRooms();
-		
+
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,16 +37,16 @@ public class RoomController {
 
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void updateRoom(@PathVariable Long id, @RequestBody RoomDto roomDto) {
-		 roomService.updateRoom(id, roomDto);
+		roomService.updateRoom(id, roomDto);
 	}
 
 	@GetMapping(value = "/{id}")
 	public Room getRoom(@PathVariable Long id) {
 		return roomService.getRoomById(id);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	public void deleteRoom(@PathVariable Long id) {
-		roomService.getRoomById(id);
+		roomService.deleteRoomById(id);
 	}
 }

@@ -35,7 +35,7 @@ public class GuestService implements IGuestService {
 
 	@Override
 	public Guest getGuestById(Long id) {
-		return this.guestDao.get(id);
+		return guestDao.get(id);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class GuestService implements IGuestService {
 
 	@Override
 	public void deleteGuestById(Long id) {
-		this.guestDao.delete(guestDao.get(id));
+		guestDao.delete(guestDao.get(id));
 	}
 
 }

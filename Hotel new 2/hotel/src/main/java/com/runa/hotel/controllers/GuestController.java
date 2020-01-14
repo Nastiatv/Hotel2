@@ -46,6 +46,6 @@ public class GuestController {
 	
 	@DeleteMapping(value = "/{id}")
 	public void deleteGuest(@PathVariable Long id) {
-		guestService.getGuestById(id);
+		guestService.deleteGuestById(id);
 	}
 }

@@ -17,8 +17,8 @@ public class RoomDto extends ADto {
 	private int dailyPrice;
 	private Status status;
 
-	public static List<RoomDto> convertList(List<Room> entities) {
-		return entities.stream().map(RoomDto::new).collect(Collectors.toList());
+	public static List<RoomDto> convertList(List<Room> all) {
+		return all.stream().map(RoomDto::new).collect(Collectors.toList());
 	}
 
 	public int getCapacity() {
@@ -46,6 +46,7 @@ public class RoomDto extends ADto {
 	}
 
 	public RoomDto(Room room) {
+		this.id = room.getId();
 		this.capacity = room.getCapacity();
 		this.dailyPrice = room.getDailyPrice();
 		this.status = Status.valueOf(room.getStatus());
