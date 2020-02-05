@@ -23,20 +23,20 @@ public class ServiceService implements IServiceService {
 		return ServiceDto.convertList(serviceDao.getAll());
 	}
 
-	public com.runa.hotel.entities.Service addService(ServiceDto serviceDto) {
+	public ServiceDto addService(ServiceDto serviceDto) {
 		com.runa.hotel.entities.Service service = new com.runa.hotel.entities.Service();
 		service.setName(serviceDto.getName());
 		service.setDailyPrice(serviceDto.getDailyPrice());
 		service.setStatus(serviceDto.getStatus());
-		return serviceDao.create(service);
+		return ServiceDto.entityToDto(serviceDao.create(service));
 	}
 
-	public com.runa.hotel.entities.Service getServiceById(Long id) {
-		return serviceDao.get(id);
+	public ServiceDto getServiceById(Long id) {
+		return ServiceDto.entityToDto(serviceDao.get(id));
 	}
 
 	public void updateService(Long id, ServiceDto serviceDto) {
-		com.runa.hotel.entities.Service service = getServiceById(id);
+		com.runa.hotel.entities.Service service = serviceDao.get(id);
 
 		if (!StringUtils.isEmpty(serviceDto.getStatus())) {
 			service.setStatus(serviceDto.getStatus());
@@ -51,6 +51,6 @@ public class ServiceService implements IServiceService {
 	}
 
 	public void deleteServiceById(Long id) {
-		serviceDao.delete(getServiceById(id));
+		serviceDao.delete(serviceDao.get(id));
 	}
 }

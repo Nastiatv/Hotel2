@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.runa.hotel.api.dao.IRoomDao;
 import com.runa.hotel.entities.Room;
+import com.runa.hotel.entities.Room_;
 
 @Repository
 public class RoomDao extends AGenericDao<Room> implements IRoomDao{
@@ -25,7 +26,7 @@ public class RoomDao extends AGenericDao<Room> implements IRoomDao{
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Room> cq = cb.createQuery(getGenericClass());
 		Root<Room> rootEntry = cq.from(Room.class);
-		CriteriaQuery<Room> all =cq.select(rootEntry).where(cb.equal(rootEntry, id));
+		CriteriaQuery<Room> all =cq.select(rootEntry).where(cb.equal(rootEntry.get(Room_.id), id));
 		TypedQuery<Room> result = entityManager.createQuery(all);
 		return result.getSingleResult();}
 		catch(NoResultException e) {

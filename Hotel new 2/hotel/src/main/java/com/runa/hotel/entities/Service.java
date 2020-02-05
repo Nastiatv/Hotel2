@@ -4,27 +4,38 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.runa.hotel.enums.Status;
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "services")
 public class Service extends AEntity {
 
-	private static final Logger logger = LoggerFactory.getLogger(Service.class);
-
 	@Column(name = "daily_price")
 	private Integer dailyPrice;
+
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private Status status;
+
 	@Column(name = "name")
 	private String name;
 
+	@ManyToMany
+	@JoinTable(name = "relation_history_service", 
+	joinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"), 
+	inverseJoinColumns = @JoinColumn(name = "room_history_id", referencedColumnName = "id"))
+	private RoomHistory roomHistory;
+	
 	public Integer getDailyPrice() {
 		return dailyPrice;
 	}
@@ -42,11 +53,11 @@ public class Service extends AEntity {
 	}
 
 	public String getStatus() {
-	    return this.status.name();
+		return this.status.name();
 	}
 
 	public void setStatus(String status) {
-	    this.status = Status.valueOf(status);
+		this.status = Status.valueOf(status);
 	}
 
 	public Service(Integer dailyPrice, Status status, String name) {
@@ -58,19 +69,12 @@ public class Service extends AEntity {
 	public Service() {
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("ServiceDto id: ");
-		sb.append(id);
-		sb.append(" ServiceDto name: ");
-		sb.append(name);
-		sb.append(" Price = ");
-		sb.append(dailyPrice);
-		sb.append(" Status: ");
-		sb.append(status);
-		String serviceToString = sb.toString();
-		logger.info(serviceToString);
-		return sb.toString();
+	public RoomHistory getRoomHistory() {
+		return roomHistory;
 	}
-}
+
+	public void setRoomHistory(RoomHistory roomHistory) {
+		this.roomHistory = roomHistory;
+	}
+	
+	}

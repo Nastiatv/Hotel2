@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.runa.hotel.api.dao.IGuestDao;
 import com.runa.hotel.entities.Guest;
+import com.runa.hotel.entities.Guest_;
 
 @Repository
 public class GuestDao extends AGenericDao<Guest> implements IGuestDao {
@@ -24,7 +25,7 @@ public class GuestDao extends AGenericDao<Guest> implements IGuestDao {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Guest> cq = cb.createQuery(getGenericClass());
 		Root<Guest> rootEntry = cq.from(Guest.class);
-		CriteriaQuery<Guest> all =cq.select(rootEntry).where(cb.equal(rootEntry, id));
+		CriteriaQuery<Guest> all =cq.select(rootEntry).where(cb.equal(rootEntry.get(Guest_.id), id));
 		TypedQuery<Guest> result = entityManager.createQuery(all);
 		return result.getSingleResult();}
 		catch(NoResultException e) {
@@ -32,3 +33,4 @@ public class GuestDao extends AGenericDao<Guest> implements IGuestDao {
 		}
 	}
 }
+

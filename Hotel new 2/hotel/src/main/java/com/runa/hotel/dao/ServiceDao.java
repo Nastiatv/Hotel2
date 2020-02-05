@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.runa.hotel.api.dao.IServiceDao;
 import com.runa.hotel.entities.Service;
+import com.runa.hotel.entities.Service_;
 
 @Repository
 public class ServiceDao extends AGenericDao<Service> implements IServiceDao {
@@ -24,7 +25,7 @@ public class ServiceDao extends AGenericDao<Service> implements IServiceDao {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Service> cq = cb.createQuery(getGenericClass());
 		Root<Service> rootEntry = cq.from(Service.class);
-		CriteriaQuery<Service> all =cq.select(rootEntry).where(cb.equal(rootEntry, id));
+		CriteriaQuery<Service> all =cq.select(rootEntry).where(cb.equal(rootEntry.get(Service_.id), id));
 		TypedQuery<Service> result = entityManager.createQuery(all);
 		return result.getSingleResult();}
 		catch(NoResultException e) {

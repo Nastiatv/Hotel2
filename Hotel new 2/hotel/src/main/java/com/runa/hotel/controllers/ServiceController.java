@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.runa.hotel.api.dto.ServiceDto;
 import com.runa.hotel.api.service.IServiceService;
-import com.runa.hotel.entities.Service;
 
 @RestController
 @RequestMapping(value = "/services")
@@ -30,7 +29,7 @@ public class ServiceController {
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Service addService(@RequestBody ServiceDto serviceDto) {
+	public ServiceDto addService(@RequestBody ServiceDto serviceDto) {
 		return serviceService.addService(serviceDto);
 	}
 
@@ -40,7 +39,7 @@ public class ServiceController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public Service getService(@PathVariable Long id) {
+	public ServiceDto getService(@PathVariable Long id) {
 		return serviceService.getServiceById(id);
 	}
 	

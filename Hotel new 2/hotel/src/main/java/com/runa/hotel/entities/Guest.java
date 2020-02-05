@@ -1,32 +1,32 @@
 package com.runa.hotel.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name="guests")
-public class Guest extends AEntity{
+@DynamicInsert
+@DynamicUpdate
+@Table(name = "guests")
+public class Guest extends AEntity {
 
-	
-private static final Logger logger =LoggerFactory.getLogger(Guest.class);
-	
+	@ManyToMany
+	@JoinTable(name = "relation_history_guest", 
+	joinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"), 
+	inverseJoinColumns = @JoinColumn(name = "room_history_id", referencedColumnName = "id"))
+	private List<RoomHistory> roomHistories;
+
 	public Guest(Long id) {
 		this.id = id;
 	}
 
 	public Guest() {
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("GuestDao Id: ");
-		sb.append(id);
-		String guestToString=sb.toString();
-		logger.info(guestToString);
-		return sb.toString();
 	}
 }

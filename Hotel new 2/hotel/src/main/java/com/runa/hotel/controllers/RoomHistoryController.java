@@ -13,39 +13,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.runa.hotel.api.dto.RoomDto;
-import com.runa.hotel.api.service.IRoomService;
+import com.runa.hotel.api.dto.RoomHistoryDto;
+import com.runa.hotel.api.service.IRoomHistoryService;
 
 @RestController
-@RequestMapping(value = "/rooms")
-public class RoomController {
+@RequestMapping(value = "/room_histories")
+public class RoomHistoryController {
 
 	@Autowired
-	IRoomService roomService;
+	IRoomHistoryService roomHistoryService;
 
 	@GetMapping
-	public List<RoomDto> getAllRooms() {
-		return roomService.getAllRooms();
-
+	public List<RoomHistoryDto> getAllRoomHistories() {
+		return roomHistoryService.getAllRoomHistories();
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public RoomDto addRoom(@RequestBody RoomDto roomDto) {
-		return roomService.addRoom(roomDto);
+	public RoomHistoryDto addRoomHistory(@RequestBody RoomHistoryDto roomHistoryDto) {
+		return roomHistoryService.addRoomHistory(roomHistoryDto);
 	}
 
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateRoom(@PathVariable Long id, @RequestBody RoomDto roomDto) {
-		roomService.updateRoom(id, roomDto);
+	public void updateRoomHistory(@PathVariable Long id, @RequestBody RoomHistoryDto roomHistoryDto) {
+		roomHistoryService.updateRoomHistory(id, roomHistoryDto);
 	}
 
 	@GetMapping(value = "/{id}")
-	public RoomDto getRoom(@PathVariable Long id) {
-		return roomService.getRoomById(id);
+	public RoomHistoryDto getRoomHistory(@PathVariable Long id) {
+		return roomHistoryService.getRoomHistoryById(id);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public void deleteRoom(@PathVariable Long id) {
-		roomService.deleteRoomById(id);
+	public void deleteRoomHistory(@PathVariable Long id) {
+		roomHistoryService.deleteRoomHistoryById(id);
 	}
 }

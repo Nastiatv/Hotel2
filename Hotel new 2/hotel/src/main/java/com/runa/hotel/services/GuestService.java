@@ -27,15 +27,15 @@ public class GuestService implements IGuestService {
 	}
 
 	@Override
-	public Guest addGuest(GuestDto guestDto) {
+	public GuestDto addGuest(GuestDto guestDto) {
 		Guest guest = new Guest();
 		guest.setId(guestDto.getId());
-		return guestDao.create(guest);
+		return GuestDto.entityToDto(guestDao.create(guest));
 	}
 
 	@Override
-	public Guest getGuestById(Long id) {
-		return guestDao.get(id);
+	public GuestDto getGuestById(Long id) {
+		return GuestDto.entityToDto(guestDao.get(id));
 	}
 
 	@Override

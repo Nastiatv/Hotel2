@@ -1,24 +1,55 @@
 package com.runa.hotel.api.dto;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.runa.hotel.entities.Room;
 import com.runa.hotel.enums.Status;
 
 public class RoomDto extends ADto {
 
-	private static final Logger logger = LoggerFactory.getLogger(RoomDto.class);
-
 	private int capacity;
 	private int dailyPrice;
 	private Status status;
+	private List<RoomHistoryDto> roomHistories;
 
-	public static List<RoomDto> convertList(List<Room> all) {
-		return all.stream().map(RoomDto::new).collect(Collectors.toList());
+	public static List<RoomDto> convertList(List<Room> entities) {
+		List<RoomDto> rooms = new ArrayList<>();
+		for (Room entity : entities) {
+			RoomDto dto = new RoomDto();
+			dto.setId(entity.getId());
+			dto.setCapacity(entity.getCapacity());
+			dto.setDailyPrice(entity.getDailyPrice());
+			dto.setStatus(entity.getStatus());
+			dto.setRoomHistories(RoomHistoryDto.convertList(entity.getRoomHistories()));
+			rooms.add(dto);
+		}
+		return rooms;
+	}
+
+	public static RoomDto entityToDto(Room entity) {
+		RoomDto dto = new RoomDto();
+		dto.setId(entity.getId());
+		if (entity.getId() != null) {
+			dto.setId(entity.getId());
+			dto.setCapacity(entity.getCapacity());
+			dto.setDailyPrice(entity.getDailyPrice());
+			dto.setStatus(entity.getStatus());
+			dto.setRoomHistories(RoomHistoryDto.convertList(entity.getRoomHistories()));
+		} else {
+			dto.setId(null);
+		}
+		return dto;
+	}
+
+	public static Room dtoToEntity(RoomDto dto) {
+		Room room = new Room();
+		room.setId(dto.getId());
+		room.setCapacity(dto.getCapacity());
+		room.setDailyPrice(dto.getDailyPrice());
+		room.setStatus(dto.getStatus());
+//		roomHistory.setRoomHistory(ServiceDto.convertList(dto.getServices()));
+		return room;
 	}
 
 	public int getCapacity() {
@@ -38,11 +69,19 @@ public class RoomDto extends ADto {
 	}
 
 	public String getStatus() {
-	    return this.status.name();
+		return this.status.name();
 	}
 
 	public void setStatus(String status) {
-	    this.status = Status.valueOf(status);
+		this.status = Status.valueOf(status);
+	}
+
+	public List<RoomHistoryDto> getRoomHistories() {
+		return roomHistories;
+	}
+
+	public void setRoomHistories(List<RoomHistoryDto> roomHistories) {
+		this.roomHistories = roomHistories;
 	}
 
 	public RoomDto(Room room) {
@@ -55,19 +94,4 @@ public class RoomDto extends ADto {
 	public RoomDto() {
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("RoomDto Number: ");
-		sb.append(id);
-		sb.append(" Capacity: ");
-		sb.append(capacity);
-		sb.append(" Daily price: ");
-		sb.append(dailyPrice);
-		sb.append(" Status: ");
-		sb.append(status);
-		String roomToString = sb.toString();
-		logger.info(roomToString);
-		return sb.toString();
-	}
 }

@@ -1,26 +1,63 @@
 package com.runa.hotel.api.dto;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.runa.hotel.entities.Service;
 import com.runa.hotel.enums.Status;
 
 public class ServiceDto extends ADto {
 
-	private static final Logger logger = LoggerFactory.getLogger(ServiceDto.class);
-
 	private int dailyPrice;
 
 	private Status status;
 
 	private String name;
-	
+
+	private Long roomHistoryId;
+
 	public static List<ServiceDto> convertList(List<Service> entities) {
-		return entities.stream().map(ServiceDto::new).collect(Collectors.toList());
+		List<ServiceDto> services = new ArrayList<>();
+		for (Service entity : entities) {
+			ServiceDto dto = new ServiceDto();
+			dto.setId(entity.getId());
+			dto.setName(entity.getName());
+			dto.setDailyPrice(entity.getDailyPrice());
+			dto.setStatus(entity.getStatus());
+			if (entity.getRoomHistory() != null) {
+				dto.setRoomHistoryId(entity.getRoomHistory().getId());
+			}
+			services.add(dto);
+		}
+		return services;
+	}
+
+	public static ServiceDto entityToDto(Service entity) {
+		ServiceDto dto = new ServiceDto();
+		dto.setId(entity.getId());
+		if (entity.getId() != null) {
+			dto.setId(entity.getId());
+			dto.setName(entity.getName());
+			dto.setDailyPrice(entity.getDailyPrice());
+			dto.setStatus(entity.getStatus());
+			if (entity.getRoomHistory() != null) {
+				dto.setRoomHistoryId(entity.getRoomHistory().getId());
+			} else {
+				dto.setRoomHistoryId(null);
+			}
+		} else {
+			dto.setId(null);
+		}
+		return dto;
+	}
+
+	public static Service dtoToEntity(ServiceDto dto) {
+		Service service = new Service();
+		service.setId(dto.getId());
+		service.setName(dto.getName());
+		service.setDailyPrice(dto.getDailyPrice());
+		service.setStatus(dto.getStatus());
+		return service;
 	}
 
 	public int getDailyPrice() {
@@ -40,11 +77,19 @@ public class ServiceDto extends ADto {
 	}
 
 	public String getStatus() {
-	    return this.status.name();
+		return this.status.name();
 	}
 
 	public void setStatus(String status) {
-	    this.status = Status.valueOf(status);
+		this.status = Status.valueOf(status);
+	}
+	
+	public Long getRoomHistoryId() {
+		return roomHistoryId;
+	}
+
+	public void setRoomHistoryId(Long roomHistoryId) {
+		this.roomHistoryId = roomHistoryId;
 	}
 
 	public ServiceDto(Service service) {
@@ -52,24 +97,30 @@ public class ServiceDto extends ADto {
 		this.dailyPrice = service.getDailyPrice();
 		this.status = Status.valueOf(service.getStatus());
 		this.name = service.getName();
+		this.roomHistoryId=service.getRoomHistory().getId();
 	}
 
 	public ServiceDto() {
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("ServiceDto id: ");
-		sb.append(id);
-		sb.append(" ServiceDto name: ");
-		sb.append(name);
-		sb.append(" Price = ");
-		sb.append(dailyPrice);
-		sb.append(" Status: ");
-		sb.append(status);
-		String serviceToString = sb.toString();
-		logger.info(serviceToString);
-		return sb.toString();
-	}
+//	public static List<Service> convertListDtoToEntities(List<ServiceDto> ListDto) {
+//		List<Service> services = new ArrayList<>();
+//		for (ServiceDto dto : ListDto) {
+//			Service service = new Service();
+//			dto.setId(entity.getId());
+//			dto.setName(entity.getName());
+//			dto.setDailyPrice(entity.getDailyPrice());
+//			dto.setStatus(entity.getStatus());
+//			if (entity.getRoomHistory() != null) {
+//				dto.setRoomHistoryId(entity.getRoomHistory().getId());
+//			}
+//			services.add(dto);
+//		}
+//		return services;
+//	}
+//		return null;
+//	}
+
+	
+
 }

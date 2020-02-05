@@ -24,20 +24,20 @@ public class RoomService implements IRoomService {
 		return RoomDto.convertList(roomDao.getAll());
 	}
 
-	public Room addRoom(RoomDto roomDto) {
+	public RoomDto addRoom(RoomDto roomDto) {
 		Room room = new Room();
 		room.setCapacity(roomDto.getCapacity());
 		room.setDailyPrice(roomDto.getDailyPrice());
 		room.setStatus(roomDto.getStatus());
-		return roomDao.create(room);
+		return RoomDto.entityToDto(roomDao.create(room));
 	}
 
-	public Room getRoomById(Long id) {
-		return roomDao.get(id);
+	public RoomDto getRoomById(Long id) {
+		return RoomDto.entityToDto(roomDao.get(id));
 	}
 
 	public void updateRoom(Long id, RoomDto roomDto) {
-		Room room = getRoomById(id);
+		Room room = roomDao.get(id);
 
 		if (!StringUtils.isEmpty(roomDto.getStatus())) {
 			room.setStatus(roomDto.getStatus());
@@ -52,6 +52,6 @@ public class RoomService implements IRoomService {
 	}
 
 	public void deleteRoomById(Long id) {
-		roomDao.delete(getRoomById(id));
+		roomDao.delete(roomDao.get(id));
 	}
 }

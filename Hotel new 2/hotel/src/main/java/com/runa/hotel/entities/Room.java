@@ -1,35 +1,52 @@
 package com.runa.hotel.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.runa.hotel.enums.Status;
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "rooms")
 public class Room extends AEntity {
 
-	private static final Logger logger = LoggerFactory.getLogger(Room.class);
-
 	@Column(name = "capacity")
 	private Integer capacity;
+
 	@Column(name = "daily_price")
 	private Integer dailyPrice;
+
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private Status status;
+
+	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+	private List<RoomHistory> roomHistories;
+
+	public String getStatus() {
+		return this.status.name();
+	}
+
+	public void setStatus(String status) {
+		this.status = Status.valueOf(status);
+	}
 
 	public Integer getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(int capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 
@@ -37,16 +54,20 @@ public class Room extends AEntity {
 		return dailyPrice;
 	}
 
-	public void setDailyPrice(int dailyPrice) {
+	public void setDailyPrice(Integer dailyPrice) {
 		this.dailyPrice = dailyPrice;
 	}
 
-	public String getStatus() {
-	    return this.status.name();
+	public List<RoomHistory> getRoomHistories() {
+		return roomHistories;
 	}
 
-	public void setStatus(String status) {
-	    this.status = Status.valueOf(status);
+	public void setRoomHistories(List<RoomHistory> roomHistories) {
+		this.roomHistories = roomHistories;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public Room(int capacity, int dailyPrice, Status status) {
@@ -58,19 +79,4 @@ public class Room extends AEntity {
 	public Room() {
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("RoomDto Number: ");
-		sb.append(id);
-		sb.append(" Capacity: ");
-		sb.append(capacity);
-		sb.append(" Daily price: ");
-		sb.append(dailyPrice);
-		sb.append(" Status: ");
-		sb.append(status);
-		String roomToString = sb.toString();
-		logger.info(roomToString);
-		return sb.toString();
-	}
 }

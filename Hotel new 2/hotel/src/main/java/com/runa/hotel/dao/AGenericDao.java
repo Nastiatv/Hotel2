@@ -1,5 +1,6 @@
 package com.runa.hotel.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -61,7 +62,7 @@ public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> 
 			TypedQuery<T> result = entityManager.createQuery(cq);
 			return result.getResultList();
 		} catch (NoResultException e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 }

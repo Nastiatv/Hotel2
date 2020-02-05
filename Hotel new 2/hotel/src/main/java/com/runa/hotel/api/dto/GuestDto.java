@@ -1,17 +1,15 @@
 package com.runa.hotel.api.dto;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.runa.hotel.entities.Guest;
 
 public class GuestDto extends ADto {
 
-	private static final Logger logger = LoggerFactory.getLogger(GuestDto.class);
+	
+	private List<RoomHistoryDto> roomHistories;
 
+	
 	public GuestDto(Guest guest) {
 		this.id = guest.getId();
 	}
@@ -19,17 +17,38 @@ public class GuestDto extends ADto {
 	public GuestDto() {
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("GuestDao Id: ");
-		sb.append(id);
-		String guestToString = sb.toString();
-		logger.info(guestToString);
-		return sb.toString();
+	public List<RoomHistoryDto> getRoomHistories() {
+		return roomHistories;
 	}
 
-	public static List<GuestDto> convertList(List<Guest> all) {
-		return all.stream().map(GuestDto::new).collect(Collectors.toList());
+	public void setRoomHistories(List<RoomHistoryDto> roomHistories) {
+		this.roomHistories = roomHistories;
+	}
+
+	public static List<GuestDto> convertList(List<Guest> entities) {
+		List<GuestDto> guests = new java.util.ArrayList<>();
+		for (Guest entity : entities) {
+			GuestDto dto = new GuestDto();
+			dto.setId(entity.getId());
+			guests.add(dto);
+		}
+		return guests;
+	}
+
+	public static GuestDto entityToDto(Guest entity) {
+		GuestDto dto = new GuestDto();
+		dto.setId(entity.getId());
+		if (entity.getId() != null) {
+			dto.setId(entity.getId());
+		} else {
+			dto.setId(null);
+		}
+		return dto;
+	}
+
+	public static Guest dtoToEntity(GuestDto dto) {
+		Guest guest = new Guest();
+		guest.setId(dto.getId());
+		return guest;
 	}
 }

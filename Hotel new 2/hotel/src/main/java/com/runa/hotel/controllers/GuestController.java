@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.runa.hotel.api.dto.GuestDto;
 import com.runa.hotel.api.service.IGuestService;
-import com.runa.hotel.entities.Guest;
 
 @RestController
 @RequestMapping(value = "/guests")
@@ -30,7 +29,7 @@ public class GuestController {
 	}
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Guest addGuest(@RequestBody GuestDto guestDto) {
+	public GuestDto addGuest(@RequestBody GuestDto guestDto) {
 		return guestService.addGuest(guestDto);
 	}
 
@@ -40,7 +39,7 @@ public class GuestController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public Guest getGuest(@PathVariable Long id) {
+	public GuestDto getGuest(@PathVariable Long id) {
 		return guestService.getGuestById(id);
 	}
 	
